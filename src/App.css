@@ -1,38 +1,264 @@
+:root {
+    --app-background-color: #121213;
+    --green: #538d4e;
+    --yellow: #b59f3b;
+    --grey: #3a3a3c;
+    --text-color: #fff;
+    --border-default-color: #3a3a3c;
+    --border-active-color: #565758;
+    --key-default-color: #818384;
+}
+
+body {
+    background-color: var(--app-background-color);
+}
+
 .App {
-  text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cell {
+    border: 2px solid var(--border-default-color);
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--text-color);
+    text-shadow: 1px 1px 1px black;
 }
 
-.App-link {
-  color: #61dafb;
+.row.current > .active {
+    animation: bounce 0.2s ease-in-out forwards;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.row.current.jiggle {
+    animation: jiggle 0.3s ease;
+}
+
+.row > .green {
+    --background-color: var(--green);
+    animation: flip 0.5s ease forwards;
+}
+
+.row > .yellow {
+    --background-color: var(--yellow);
+    animation: flip 0.5s ease forwards;
+}
+
+.row > .grey {
+    --background-color: var(--grey);
+    animation: flip 0.5s ease forwards;
+}
+
+.row > div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.row > div:nth-child(3) {
+    animation-delay: 0.4s;
+}
+.row > div:nth-child(4) {
+    animation-delay: 0.6s;
+}
+.row > div:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+    margin-bottom: 2%;
+}
+
+.keyRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    min-width: 20px;
+    text-align: center;
+    height: 40px;
+    padding: 2px 8px;
+    background-color: var(--key-default-color);
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.key .special {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+.keyRow > .green {
+    --background-color: var(--green);
+    animation: fade 0.5s ease 2s forwards;
+}
+
+.keyRow > .yellow {
+    --background-color: var(--yellow);
+    animation: fade 0.5s ease 2s forwards;
+}
+
+.keyRow > .grey {
+    --background-color: var(--grey);
+    animation: fade 0.5s ease 2s forwards;
+}
+
+.modal {
+    min-width: 50px;
+    min-height: 30px;
+    padding: 10px;
+    position: fixed;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+    z-index: 9999;
+
+}
+
+.modal > button.close {
+
+    position: absolute;
+    top : 5px;
+    right: 5px;
+    height: 25px;
+    width: 25px;
+    font-weight: bold;
+    background-color: #111;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal > button.close:hover {
+    background-color: #222;
+}
+
+.blue {
+    background-color: #007bff!important;
+}
+
+.red {
+    background-color: #dc3545!important;
+}
+
+@keyframes flip {
+    0% {
+        transform: rotateX(0);
+        background-color: var(--app-background-color);
+    }
+
+    45% {
+        transform: rotateX(90deg);
+        background-color: var(--app-background-color);
+    }
+
+    55% {
+        transform: rotateX(90deg);
+        background-color: var(--background-color);
+    }   
+    100% {
+        transform: rotateX(0);
+        background-color: var(--background-color);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+        border-color: #555;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        border-color: var(--border-active-color);
+    }
+}
+
+@keyframes jiggle {
+
+    0% {transform: translateX(0);}
+
+    25% {transform: translateX(-0.5rem);}
+
+    50% {transform: translateX(0.5rem);}
+
+    75%{transform: translateX(-0.5rem);}
+
+    100%{transform: translateX(0);}
+    
+}
+
+@keyframes fade {
+    0% {
+        background-color: var(--key-default-color);
+    }
+
+    100% {
+        background-color: var(--background-color);
+    }
+}
+
+@media screen and (max-width: 480px) {
+ 
+    .key {
+        font-size: 10px;
+        min-width: 15px;
+        height: 50px;
+    }
 }

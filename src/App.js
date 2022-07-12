@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react";
+import "./App.css";
+
+import Grid from "./components/Grid/Grid";
+import Keyboard from "./components/Keyboard/Keyboard";
+import Modal from "./components/Modal";
+import { AppContext } from "./context/AppContext";
 
 function App() {
+  const { isGameOver, isWon, solution, toastMessage } = useContext(AppContext);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Wordle</h1>
+
+      {(isGameOver || toastMessage) && (
+        <Modal
+          isWon={isWon}
+          solution={solution}
+          autoClose
+          toast={toastMessage}
+          delay={!!(isWon || isGameOver)}
+        />
+      )}
+
+      <Grid />
+      <Keyboard />
     </div>
   );
 }
